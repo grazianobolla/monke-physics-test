@@ -25,12 +25,10 @@ func _process_tick() -> void:
 	if !physics_enabled:
 		return
 		
-	#print("PROC ", current_tick, ":", rigid_body.position)
 	_advance_tick()
 	
 func _on_advance_ticks() -> void:
-	for i in 16:
-		#print("LOOP ", current_tick, ":", rigid_body.position)
+	for i in 128:
 		_advance_tick()
 		
 func _advance_tick() -> void:
@@ -44,6 +42,7 @@ func _rollback_position() -> void:
 	rigid_body.reset_state()
 	rigid_body2.reset_state()
 	character_body.reset_state()
+	JoltPhysicsServer3D.space_flush_queries(space)
 	print("Bodies state was reset!")
 
 func _on_restart_pressed() -> void:
