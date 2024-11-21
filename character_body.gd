@@ -10,7 +10,7 @@ func advance_physics(delta: float) -> void:
 	if process_mode == PROCESS_MODE_DISABLED:
 		return
 		
-	velocity = Vector3(0.2, -1, 0) * 16 * delta
+	velocity = Vector3(0.6, -1, 0) * 16 * delta
 	velocity *= delta / get_process_delta_time()
 	move_and_slide()
 	velocity /= delta / get_process_delta_time()

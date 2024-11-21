@@ -13,7 +13,7 @@ config_version=5
 config/name="physics-test"
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
-run/max_fps=20
+run/max_fps=120
 config/icon="res://icon.svg"
 
 [display]
@@ -26,5 +26,4 @@ project/assembly_name="physics-test"
 
 [physics]
 
-common/physics_ticks_per_second=20
 3d/physics_engine="JoltPhysics3D"
