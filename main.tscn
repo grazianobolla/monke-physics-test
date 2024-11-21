@@ -1,0 +1,113 @@
+[gd_scene load_steps=13 format=3 uid="uid://cdjwrfn0y3apw"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_hft11"]
+[ext_resource type="Script" path="res://rigid_body_3d.gd" id="2_ttvhh"]
+[ext_resource type="Script" path="res://character_body.gd" id="3_1hroy"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hex1i"]
+
+[sub_resource type="Sky" id="Sky_ywn5o"]
+sky_material = SubResource("ProceduralSkyMaterial_hex1i")
+
+[sub_resource type="Environment" id="Environment_7kt6r"]
+background_mode = 2
+sky = SubResource("Sky_ywn5o")
+
+[sub_resource type="BoxMesh" id="BoxMesh_0x2mf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8thiu"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_iw0x7"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_elefd"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yljpu"]
+size = Vector3(5, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uqixm"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_hft11")
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+projection = 1
+size = 20.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_7kt6r")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 2, 4)
+
+[node name="AdvanceTicks" type="Button" parent="."]
+offset_right = 184.0
+offset_bottom = 31.0
+text = "Advance 16 Ticks
+"
+
+[node name="Restart" type="Button" parent="."]
+offset_top = 31.0
+offset_right = 184.0
+offset_bottom = 62.0
+text = "Rollback Positions
+"
+
+[node name="EnablePhysics" type="Button" parent="."]
+offset_top = 62.0
+offset_right = 184.0
+offset_bottom = 93.0
+text = "Toggle Physics"
+
+[node name="CharacterBody" type="CharacterBody3D" parent="."]
+process_mode = 4
+script = ExtResource("3_1hroy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody"]
+mesh = SubResource("BoxMesh_0x2mf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody"]
+shape = SubResource("BoxShape3D_8thiu")
+
+[node name="RigidBody" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, 0)
+contact_monitor = true
+max_contacts_reported = 2
+script = ExtResource("2_ttvhh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody"]
+shape = SubResource("SphereShape3D_iw0x7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody"]
+mesh = SubResource("SphereMesh_elefd")
+
+[node name="RigidBody2" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 3.1, 0)
+contact_monitor = true
+max_contacts_reported = 2
+script = ExtResource("2_ttvhh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody2"]
+shape = SubResource("SphereShape3D_iw0x7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody2"]
+mesh = SubResource("SphereMesh_elefd")
+
+[node name="RampObstacle" type="StaticBody3D" parent="."]
+transform = Transform3D(0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0, 0, 1, 0, -3, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RampObstacle"]
+shape = SubResource("BoxShape3D_yljpu")
+
+[node name="Area" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3, -2.3, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area"]
+shape = SubResource("BoxShape3D_uqixm")
+
+[connection signal="pressed" from="AdvanceTicks" to="." method="_on_advance_ticks"]
+[connection signal="pressed" from="Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="EnablePhysics" to="." method="_on_enable_physics_pressed"]
+[connection signal="body_entered" from="Area" to="." method="_on_area_3d_body_entered"]
