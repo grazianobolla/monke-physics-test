@@ -28,17 +28,17 @@ func _process_tick() -> void:
 	print("PROC ", current_tick, ":", rigid_body.position)
 	_advance_tick()
 	
+func _on_advance_ticks() -> void:
+	for i in 16:
+		print("LOOP ", current_tick, ":", rigid_body.position)
+		_advance_tick()
+		
 func _advance_tick() -> void:
 	character_body.advance_physics(delta_time)
 	JoltPhysicsServer3D.space_flush_queries(space)
 	JoltPhysicsServer3D.space_step(space, delta_time)
 	current_tick += 1
 	
-func _on_advance_ticks() -> void:
-	for i in 16:
-		print("LOOP ", current_tick, ":", rigid_body.position)
-		_advance_tick()
-		
 func _rollback_position() -> void:
 	current_tick = 0
 	rigid_body.reset_state()
