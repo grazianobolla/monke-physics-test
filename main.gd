@@ -25,12 +25,12 @@ func _process_tick() -> void:
 	if !physics_enabled:
 		return
 		
-	print("PROC ", current_tick, ":", rigid_body.position)
+	#print("PROC ", current_tick, ":", rigid_body.position)
 	_advance_tick()
 	
 func _on_advance_ticks() -> void:
 	for i in 16:
-		print("LOOP ", current_tick, ":", rigid_body.position)
+		#print("LOOP ", current_tick, ":", rigid_body.position)
 		_advance_tick()
 		
 func _advance_tick() -> void:
@@ -50,7 +50,7 @@ func _on_restart_pressed() -> void:
 	_rollback_position()
 	
 func _on_area_3d_body_entered(b: Node3D) -> void:
-	print("At tick ", current_tick, " body ", b.name, " entered area!")
+	print("At tick ", current_tick, " body ", b.name, " entered area! At: ", b.position)
 
 func _on_enable_physics_pressed() -> void:
 	physics_enabled = !physics_enabled

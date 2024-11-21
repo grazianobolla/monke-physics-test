@@ -10,12 +10,12 @@ func advance_physics(delta: float) -> void:
 	if process_mode == PROCESS_MODE_DISABLED:
 		return
 		
-	velocity = Vector3.DOWN * 16 * delta
-	
-	#Move and slide by "delta" use hack to remove automatically assumed delta
+	velocity = Vector3(0.2, -1, 0) * 16 * delta
 	velocity *= delta / get_process_delta_time()
 	move_and_slide()
 	velocity /= delta / get_process_delta_time()
+	
+	move_and_collide(velocity * delta)
 	
 func reset_state() -> void:
 	#PhysicsServer3D.body_set_state(get_rid(),PhysicsServer3D.BODY_STATE_LINEAR_VELOCITY, Vector3.ZERO)

@@ -62,7 +62,6 @@ offset_bottom = 93.0
 text = "Toggle Physics"
 
 [node name="CharacterBody" type="CharacterBody3D" parent="."]
-process_mode = 4
 script = ExtResource("3_1hroy")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody"]
